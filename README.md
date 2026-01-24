@@ -1,36 +1,45 @@
-# Cybersecurity
+# Polyalphabetic (Vigenère) Cipher
 
-A collection of C++ cryptography and security tools.
+Minimal repo for a simple, interactive Vigenère cipher implementation in C++.
 
-## Projects
+## Features
+- Encrypts and decrypts using a keyword (Vigenère).
+- Uppercase-only processing; non-letters are preserved (spaces, punctuation).
+- Interactive prompt: choose Encrypt or Decrypt, then enter text and key.
 
-### Polyalphabetic Cipher
-A C++ implementation of polyalphabetic encryption and decryption using the Vigenère cipher algorithm.
+## File
+- `codes/polyalphabetic_cipher.cpp`
 
-**Features:**
-- Encrypt messages using a given key
-- Decrypt encrypted messages
-- Handles both alphabetic and non-alphabetic characters
-
-**Usage:**
-```bash
-.\build.bat .\polyalphabetic_cipher.cpp
-.\build\polyalphabetic_cipher\polyalphabetic_cipher.exe
+## Build (Windows, PowerShell)
+Using the existing helper:
+```powershell
+.\n+build.bat .\codes\polyalphabetic_cipher.cpp
 ```
 
-## Build
-
-Requires:
-- Microsoft Visual Studio with MSVC compiler
-- Windows 10+ with Windows SDK
-
-Build using the batch script:
-```bash
-.\build.bat <filename.cpp>
+Manual build with MSVC `cl.exe` (if needed):
+```powershell
+cl.exe /EHsc /nologo /Fe:build\polyalphabetic_cipher\polyalphabetic_cipher.exe .\codes\polyalphabetic_cipher.cpp
 ```
 
-Compiled executables are output to `build/<filename>/` directory.
+## Run
+```powershell
+.
+build\polyalphabetic_cipher\polyalphabetic_cipher.exe
+```
 
-## License
+## Examples
+- Encrypt
+	- Choice: `E`
+	- Text: `ATTACK AT DAWN`
+	- Key: `LEMON`
+	- Output: `LXFOPV EF RNHR`
 
-MIT
+- Decrypt
+	- Choice: `D`
+	- Text: `LXFOPV EF RNHR`
+	- Key: `LEMON`
+	- Output: `ATTACK AT DAWN`
+
+## Notes
+- Input is uppercased automatically; key is uppercased too.
+- Only A–Z are shifted; other characters pass through unchanged.
