@@ -1,4 +1,5 @@
 # Crack The Hash - TryHackMe Level 1 & 2
+
 - https://tryhackme.com/room/crackthehash
 
 ## Prerequisites
@@ -12,25 +13,82 @@
 - CPU: Ryzen 5 3600
 - GPU: RX 6600 - OpenCL (ROCm had issues, OpenCL worked great)
 - Wordlist: rockyou.txt (official from GitHub)
-- Optional: rockyou2024.txt (50GB compressed → 150GB uncompressed, takes way longer but covers more passwords) - (yeah i tried with this as well ~10+hrs)
+- Optional: rockyou2024.txt (50GB compressed → 150GB uncompressed, takes way longer but covers more passwords) - (~10+hrs)
 
 **Get Rockyou Wordlist**
-- Small: https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt ~150MB
-- Big: https://github.com/hkphh/rockyou2024.txt?tab=readme-ov-file ~150GB
+- Small: https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt (~150MB)
+- Big: https://github.com/hkphh/rockyou2024.txt?tab=readme-ov-file (~150GB)
 
-## Cheatsheet
+## Hashcat Reference
+
+https://hashcat.net/hashcat/
+
+### Common Flags
 
 | Flag | Values | Meaning |
 |---|---|---|
-| `-m` | 0, 100, 1000, 1400, 160, 1800, 3200 | Hash mode (MD5=0, SHA1=100, NTLM=1000, SHA256=1400, HMAC-SHA1=160, sha512crypt=1800, bcrypt=3200) |
-| `-a` | 0, 3, 6 | Attack mode (0=wordlist, 3=mask, 6=hybrid wordlist+mask) |
-| `-w` | 1..4 | Workload profile (3=High; faster, more GPU) |
-| `--show` |  | Show cracked results from potfile |
+| `-m` | 0, 100, 1000, 1400, 1600, 1800, 3200 | Hash mode (MD5=0, SHA1=100, NTLM=1000, SHA256=1400, DES=1600, sha512crypt=1800, bcrypt=3200) |
+| `-a` | 0, 1, 3, 6, 7 | Attack mode (0=wordlist, 1=combination, 3=mask, 6=hybrid wordlist+mask, 7=hybrid mask+wordlist) |
+| `-w` | 1, 2, 3, 4 | Workload profile (1=Low, 2=Default, 3=High, 4=Nightmare) |
+| `-o` | filename | Output file for cracked results |
+| `--show` | - | Show cracked results from potfile |
+| `--potfile-path` | path | Location of potfile |
+| `-O` | - | Kernel loops optimization |
+| `-S` | - | Slower hash mode (for large wordlists) |
+| `--username` | - | Ignore username field |
+| `-r` | rules_file | Apply rules from file |
 
-Masks:
-- `?l` lower, `?u` upper, `?d` digit, `?s` symbol, `?a` all printable
-- Custom set: `-1 ?l?d` then use `'?1?1?1?1'`
-- Quote masks in PowerShell: `'?...'`
+### Hash Modes (Common)
+
+| Hash Type | Code |
+|---|---|
+| MD5 | 0 |
+| SHA1 | 100 |
+| SHA256 | 1400 |
+| SHA512 | 1700 |
+| NTLM | 1000 |
+| LM Hash | 3000 |
+| bcrypt | 3200 |
+| Kerberos | 13100 |
+| WPA2-PBKDF2 | 22000 |
+
+### Attack Modes
+
+| Mode | Code | Description |
+|---|---|---|
+| Wordlist | 0 | Dictionary attack with wordlist |
+| Combination | 1 | Combine two wordlists |
+| Mask | 3 | Brute-force with custom charset |
+| Hybrid (WL+Mask) | 6 | Wordlist + mask suffix |
+| Hybrid (Mask+WL) | 7 | Mask prefix + wordlist |
+
+### Mask Character Sets
+
+| Placeholder | Characters |
+|---|---|
+| `?l` | Lowercase (a-z) |
+| `?u` | Uppercase (A-Z) |
+| `?d` | Digits (0-9) |
+| `?s` | Special chars (!@#$...) |
+| `?a` | All (l+u+d+s) |
+
+### Example Usage
+
+```bash
+# MD5 wordlist attack
+hashcat -m 0 -a 0 hash.txt wordlist.txt
+
+# SHA256 mask attack
+hashcat -m 1400 -a 3 hash.txt ?l?l?l?l?d?d?s?s
+
+# NTLM hybrid attack with high workload
+hashcat -m 1000 -a 6 -w 3 hashes.txt wordlist.txt ?d?d?d?d
+
+# Show results from potfile
+hashcat -m 0 --show hashes.txt
+```
+
+---
 
 ## Level 1: Hash Identification + Answers
 
@@ -217,8 +275,8 @@ Use rockyou.txt from GitHub. If password not found, ~~dont~~ try rockyou2024.txt
 
 ## Notes
 
-- **Level 1**: Simple hashes crack instantly with online tools
+- **Level 1**: Simple hashes crack instantly with online tools but can also be verified with hashcat 
 - **Level 2**: Use hashcat + GPU for speed
-- **rockyou.txt** solves most Level 2 challenges
+- **rockyou.txt** Solves all challenges
 - **rockyou2024.txt** (150GB uncompressed) is overkill for this room but fun to experiment with
 - Always use **single quotes** in PowerShell for hashes with `$` signs
