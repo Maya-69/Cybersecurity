@@ -7,7 +7,7 @@ A personal repository for learning cybersecurity concepts and implementing crypt
 ### Cryptography
 - [x] Polyalphabetic Cipher (Vigenère Cipher)
 - [x] Caesar Cipher
-- [ ] RSA Encryption
+- [x] RSA Encryption
 - [ ] AES Encryption
 - [ ] Hash Functions (MD5, SHA-256)
 - [ ] Digital Signatures
