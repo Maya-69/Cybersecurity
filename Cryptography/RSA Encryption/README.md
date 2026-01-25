@@ -5,6 +5,9 @@ RSA (Rivest–Shamir–Adleman) is an asymmetric cryptography algorithm that use
 ## How It Works
 
 ### Theory
+
+Best Video - [RSA Encryption Algorithm - Eddie Woo](https://youtu.be/4zahvcJ9glg?si=WAzKGXUPc3qvmhee)
+
 RSA is based on the difficulty of factoring large numbers. The algorithm uses two keys:
 - **Public Key (e, n)**: Used for encryption, shared with everyone
 - **Private Key (d, n)**: Used for decryption, kept secret
