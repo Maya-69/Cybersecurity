@@ -20,6 +20,9 @@ build/
 *.swo
 *~
 
+# Ignore folder
+.ignore/
+
 # OS
 .DS_Store
 Thumbs.db
