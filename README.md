@@ -8,7 +8,7 @@ A personal repository for learning cybersecurity concepts and implementing crypt
 - [x] Polyalphabetic Cipher (Vigenère Cipher)
 - [x] Caesar Cipher
 - [x] RSA Encryption
-- [ ] AES Encryption
+- [x] AES Encryption (Decryption Remaining)
 - [ ] Hash Functions (MD5, SHA-256)
 - [ ] Digital Signatures
 
