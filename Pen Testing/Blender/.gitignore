@@ -1,0 +1,34 @@
+# OS files
+.DS_Store
+Thumbs.db
+*.tmp
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build and temporary files
+build/
+dist/
+*.pyc
+__pycache__/
+
+# Sensitive files (not to be committed)
+.env
+*.key
+*.pem
+*credentials*
+
+# Tool output files (regenerable)
+*.log
+*.out
+*.txt
+
+# Phase template directories (for reference only)
+Phase1/
+Phase2/
+Phase3/
+Phase4/
+Phase5/
